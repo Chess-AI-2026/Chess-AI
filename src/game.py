@@ -1,148 +1,124 @@
-from board import Board, BOARD_SIZE
-from pieces import PieceType, Color
-from move import Move
+import pygame
 
-DIRECTIONS = {
-    PieceType.BISHOP: [(-1, -1), (-1, 1), (1, -1), (1, 1)],
-    PieceType.ROOK: [(-1, 0), (1, 0), (0, -1), (0, 1)],
-    PieceType.QUEEN: [(-1, -1), (-1, 1), (1, -1), (1, 1),
-                      (-1, 0), (1, 0), (0, -1), (0, 1)],
-}
-
+from const import *
+from board import Board
+from dragger import Dragger
+from config import Config
+from square import Square
 
 class Game:
+
     def __init__(self):
+        self.next_player = 'white'
+        self.hovered_sqr = None
         self.board = Board()
+        self.dragger = Dragger()
+        self.config = Config()
 
-    def generate_legal_moves(self, color: Color):
-        moves = self.generate_pseudo_legal_moves(color)
-        legal_moves = []
-        for move in moves:
-            self.board.make_move(move)
-            if not self.is_in_check(color):
-                legal_moves.append(move)
-            self.board.undo_move()
-        return legal_moves
+    # blit methods
 
-    def generate_pseudo_legal_moves(self, color: Color):
-        moves = []
-        for row in range(BOARD_SIZE):
-            for col in range(BOARD_SIZE):
-                piece = self.board.get_piece(row, col)
-                if piece is None or piece.color != color:
-                    continue
+    def show_bg(self, surface):
+        theme = self.config.theme
+        
+        for row in range(ROWS):
+            for col in range(COLS):
+                # color
+                color = theme.bg.light if (row + col) % 2 == 0 else theme.bg.dark
+                # rect
+                rect = (col * SQSIZE, row * SQSIZE, SQSIZE, SQSIZE)
+                # blit
+                pygame.draw.rect(surface, color, rect)
 
-                if piece.piece_type == PieceType.PAWN:
-                    moves.extend(self._pawn_moves(row, col, piece))
-                elif piece.piece_type == PieceType.KNIGHT:
-                    moves.extend(self._knight_moves(row, col, piece))
-                elif piece.piece_type in (PieceType.BISHOP, PieceType.ROOK, PieceType.QUEEN):
-                    moves.extend(self._sliding_moves(row, col, piece))
-                elif piece.piece_type == PieceType.KING:
-                    moves.extend(self._king_moves(row, col, piece))
+                # row coordinates
+                if col == 0:
+                    # color
+                    color = theme.bg.dark if row % 2 == 0 else theme.bg.light
+                    # label
+                    lbl = self.config.font.render(str(ROWS-row), 1, color)
+                    lbl_pos = (5, 5 + row * SQSIZE)
+                    # blit
+                    surface.blit(lbl, lbl_pos)
 
-        return moves
+                # col coordinates
+                if row == 7:
+                    # color
+                    color = theme.bg.dark if (row + col) % 2 == 0 else theme.bg.light
+                    # label
+                    lbl = self.config.font.render(Square.get_alphacol(col), 1, color)
+                    lbl_pos = (col * SQSIZE + SQSIZE - 20, HEIGHT - 20)
+                    # blit
+                    surface.blit(lbl, lbl_pos)
 
-    def _pawn_moves(self, row, col, piece):
-        moves = []
-        direction = -1 if piece.color == Color.WHITE else 1
-        start_row = 6 if piece.color == Color.WHITE else 1
+    def show_pieces(self, surface):
+        for row in range(ROWS):
+            for col in range(COLS):
+                # piece ?
+                if self.board.squares[row][col].has_piece():
+                    piece = self.board.squares[row][col].piece
+                    
+                    # all pieces except dragger piece
+                    if piece is not self.dragger.piece:
+                        piece.set_texture(size=80)
+                        #img = pygame.image.load(piece.texture)
+                        img_center = col * SQSIZE + SQSIZE // 2, row * SQSIZE + SQSIZE // 2
+                        #piece.texture_rect = img.get_rect(center=img_center)
+                        #surface.blit(img, piece.texture_rect)
 
-        fwd_row = row + direction
-        if self.board.in_bounds(fwd_row, col) and self.board.get_piece(fwd_row, col) is None:
-            moves.append(self._maybe_promotion(row, col, fwd_row, col, piece))
+    def show_moves(self, surface):
+        theme = self.config.theme
 
-            if row == start_row:
-                fwd2_row = row + 2 * direction
-                if self.board.get_piece(fwd2_row, col) is None:
-                    moves.append(Move(row, col, fwd2_row, col))
+        if self.dragger.dragging:
+            piece = self.dragger.piece
 
-        for dc in (-1, 1):
-            c_col = col + dc
-            c_row = row + direction
-            if not self.board.in_bounds(c_row, c_col):
-                continue
-            target = self.board.get_piece(c_row, c_col)
-            if target is not None and target.color != piece.color:
-                moves.append(self._maybe_promotion(row, col, c_row, c_col, piece))
+            # loop all valid moves
+            for move in piece.moves:
+                # color
+                color = theme.moves.light if (move.final.row + move.final.col) % 2 == 0 else theme.moves.dark
+                # rect
+                rect = (move.final.col * SQSIZE, move.final.row * SQSIZE, SQSIZE, SQSIZE)
+                # blit
+                pygame.draw.rect(surface, color, rect)
 
-        return moves
+    def show_last_move(self, surface):
+        theme = self.config.theme
 
-    def _maybe_promotion(self, sr, sc, er, ec, piece):
-        if (piece.color == Color.WHITE and er == 0) or \
-           (piece.color == Color.BLACK and er == 7):
-            return Move(sr, sc, er, ec, promotion_piece_type=None)
-        return Move(sr, sc, er, ec)
+        if self.board.last_move:
+            initial = self.board.last_move.initial
+            final = self.board.last_move.final
 
-    def _knight_moves(self, row, col, piece):
-        moves = []
-        jumps = [(2, 1), (2, -1), (-2, 1), (-2, -1),
-                 (1, 2), (1, -2), (-1, 2), (-1, -2)]
-        for dr, dc in jumps:
-            r, c = row + dr, col + dc
-            if not self.board.in_bounds(r, c):
-                continue
-            target = self.board.get_piece(r, c)
-            if target is None or target.color != piece.color:
-                moves.append(Move(row, col, r, c))
-        return moves
+            for pos in [initial, final]:
+                # color
+                color = theme.trace.light if (pos.row + pos.col) % 2 == 0 else theme.trace.dark
+                # rect
+                rect = (pos.col * SQSIZE, pos.row * SQSIZE, SQSIZE, SQSIZE)
+                # blit
+                pygame.draw.rect(surface, color, rect)
 
-    def _sliding_moves(self, row, col, piece):
-        moves = []
-        for dr, dc in DIRECTIONS[piece.piece_type]:
-            r, c = row + dr, col + dc
-            while self.board.in_bounds(r, c):
-                target = self.board.get_piece(r, c)
-                if target is None:
-                    moves.append(Move(row, col, r, c))
-                else:
-                    if target.color != piece.color:
-                        moves.append(Move(row, col, r, c))
-                    break
-                r += dr
-                c += dc
-        return moves
+    def show_hover(self, surface):
+        if self.hovered_sqr:
+            # color
+            color = (180, 180, 180)
+            # rect
+            rect = (self.hovered_sqr.col * SQSIZE, self.hovered_sqr.row * SQSIZE, SQSIZE, SQSIZE)
+            # blit
+            pygame.draw.rect(surface, color, rect, width=3)
 
-    def _king_moves(self, row, col, piece):
-        moves = []
-        for dr in (-1, 0, 1):
-            for dc in (-1, 0, 1):
-                if dr == 0 and dc == 0:
-                    continue
-                r, c = row + dr, col + dc
-                if not self.board.in_bounds(r, c):
-                    continue
-                target = self.board.get_piece(r, c)
-                if target is None or target.color != piece.color:
-                    moves.append(Move(row, col, r, c))
-        return moves
+    # other methods
 
-    def find_king(self, color: Color):
-        for row in range(BOARD_SIZE):
-            for col in range(BOARD_SIZE):
-                piece = self.board.get_piece(row, col)
-                if piece and piece.color == color and piece.piece_type == PieceType.KING:
-                    return row, col
-        return None
+    def next_turn(self):
+        self.next_player = 'white' if self.next_player == 'black' else 'black'
 
-    def is_in_check(self, color: Color):
-        king_pos = self.find_king(color)
-        if king_pos is None:
-            return False
-        enemy_color = Color.WHITE if color == Color.BLACK else Color.BLACK
-        enemy_moves = self.generate_pseudo_legal_moves(enemy_color)
-        for move in enemy_moves:
-            if (move.end_row, move.end_col) == king_pos:
-                return True
-        return False
+    def set_hover(self, row, col):
+        self.hovered_sqr = self.board.squares[row][col]
 
-    def is_checkmate(self, color: Color):
-        if not self.is_in_check(color):
-            return False
-        return len(self.generate_legal_moves(color)) == 0
+    def change_theme(self):
+        self.config.change_theme()
 
-    def is_stalemate(self, color: Color):
-        if self.is_in_check(color):
-            return False
-        return len(self.generate_legal_moves(color)) == 0
+    def play_sound(self, captured=False):
+        if captured:
+            self.config.capture_sound.play()
+        else:
+            self.config.move_sound.play()
 
+    def reset(self):
+        self.__init__()
