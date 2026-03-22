@@ -10,7 +10,7 @@ SQUARE_SIZE = WINDOW_WIDTH // BOARD_SIZE
 BOARD_LIGHT = (240, 217, 181)
 BOARD_DARK = (181, 136, 99)
 
-Brown = (240, 217, 181)
+BROWN = (240, 217, 181)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
@@ -23,6 +23,8 @@ class UI:
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont("arial", 24)
 
+        self.load_piece_images()
+
         self.game = Game()
         self.running = True
         self.selected_square = None
@@ -31,6 +33,30 @@ class UI:
         self.mode = "pvp"
         self.ai_difficulty = "easy"
         self.player_color = Color.WHITE
+
+    def load_piece_images(self):
+        def scale(path):
+            img = pygame.image.load(path).convert_alpha()
+            size = int(SQUARE_SIZE * 0.8)
+            return pygame.transform.smoothscale(img, (size, size))
+
+        self.WHITE_IMAGES = {
+            PieceType.PAWN:   scale("assets/images/white pawn.png"),
+            PieceType.KNIGHT: scale("assets/images/white knight.png"),
+            PieceType.BISHOP: scale("assets/images/white bishop.png"),
+            PieceType.ROOK:   scale("assets/images/white rook.png"),
+            PieceType.QUEEN:  scale("assets/images/white queen.png"),
+            PieceType.KING:   scale("assets/images/white king.png"),
+        }
+
+        self.BLACK_IMAGES = {
+            PieceType.PAWN:   scale("assets/images/black pawn.png"),
+            PieceType.KNIGHT: scale("assets/images/black knight.png"),
+            PieceType.BISHOP: scale("assets/images/black bishop.png"),
+            PieceType.ROOK:   scale("assets/images/black rook.png"),
+            PieceType.QUEEN:  scale("assets/images/black queen.png"),
+            PieceType.KING:   scale("assets/images/black king.png"),
+        }
 
     def run(self):
         self.show_main_menu()
@@ -149,6 +175,7 @@ class UI:
 
             self.clock.tick(30)
 
+
     def handle_game_loop(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -266,7 +293,7 @@ class UI:
                         if rect.collidepoint(event.pos):
                             move.promotion_piece_type = ptype
                             self.game.board.make_move(move)
-                            var = False
+                            val = False
                             return
 
             self.clock.tick(30)
@@ -277,7 +304,7 @@ class UI:
             winner = "Black" if color_to_move == Color.WHITE else "White"
             self.game_over_message = f"Checkmate! {winner} wins."
         elif self.game.is_stalemate(color_to_move):
-            self.game_over_message = "Stalemate Draw."
+            self.game_over_message = "Stalemate! Draw."
 
     def draw_board(self):
         for row in range(BOARD_SIZE):
@@ -295,12 +322,16 @@ class UI:
             for col in range(BOARD_SIZE):
                 piece = self.game.board.get_piece(row, col)
                 if piece:
-                    text = piece.piece_type.value
-                    color = WHITE if piece.color == Color.WHITE else BLACK
-                    self.draw_text_center(text,
-                                          col * SQUARE_SIZE + SQUARE_SIZE // 2,
-                                          row * SQUARE_SIZE + SQUARE_SIZE // 2,
-                                          color)
+                    if piece.color == Color.WHITE:
+                        img = self.WHITE_IMAGES[piece.piece_type]
+                    else:
+                        img = self.BLACK_IMAGES[piece.piece_type]
+
+                    rect = img.get_rect(center=(
+                        col * SQUARE_SIZE + SQUARE_SIZE // 2,
+                        row * SQUARE_SIZE + SQUARE_SIZE // 2
+                    ))
+                    self.screen.blit(img, rect)
 
     def draw_text_center(self, text, x, y, color, size=24):
         font = pygame.font.SysFont("arial", size)
@@ -312,7 +343,7 @@ class UI:
         width, height = 220, 40
         rect = pygame.Rect(0, 0, width, height)
         rect.center = (x, y)
-        pygame.draw.rect(self.screen, Brown, rect)
+        pygame.draw.rect(self.screen, BROWN, rect)
         pygame.draw.rect(self.screen, BLACK, rect, 2)
         self.draw_text_center(text, x, y, BLACK)
         return rect
