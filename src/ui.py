@@ -28,6 +28,10 @@ class UI:
         self.selected_square = None
         self.game_over_message = None
 
+        self.mode = "pvp"
+        self.ai_difficulty = "easy"
+        self.player_color = Color.WHITE
+
     def run(self):
         self.show_main_menu()
         while self.running:
@@ -40,8 +44,8 @@ class UI:
             self.screen.fill((50, 50, 80))
             self.draw_text_center("Chess", WINDOW_WIDTH // 2, 80, WHITE, 36)
 
-            start_rect = self.draw_button("Start Game", WINDOW_WIDTH // 2, 200)
-            instr_rect = self.draw_button("Instructions", WINDOW_WIDTH // 2, 260)
+            pvp_rect = self.draw_button("Player vs Player", WINDOW_WIDTH // 2, 200)
+            ai_rect = self.draw_button("Play vs AI", WINDOW_WIDTH // 2, 260)
             quit_rect = self.draw_button("Quit", WINDOW_WIDTH // 2, 320)
 
             pygame.display.flip()
@@ -50,36 +54,98 @@ class UI:
                 if event.type == pygame.QUIT:
                     self.running = False
                     in_menu = False
+
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if start_rect.collidepoint(event.pos):
+                    if pvp_rect.collidepoint(event.pos):
+                        self.mode = "pvp"
+                        self.game = Game()
+                        self.game_over_message = None
                         in_menu = False
-                    elif instr_rect.collidepoint(event.pos):
-                        self.show_instructions()
+
+                    elif ai_rect.collidepoint(event.pos):
+                        self.mode = "ai"
+                        self.choose_ai_difficulty()
+                        self.choose_player_color()
+                        self.game = Game()
+                        self.game_over_message = None
+                        in_menu = False
+
                     elif quit_rect.collidepoint(event.pos):
                         self.running = False
                         in_menu = False
 
             self.clock.tick(30)
 
-    def show_instructions(self):
-        showing = True
-        while showing and self.running:
+    def choose_ai_difficulty(self):
+        choosing = True
+        while choosing and self.running:
             self.screen.fill((50, 50, 80))
-            self.draw_text_center("Instructions", WINDOW_WIDTH // 2, 60, WHITE, 32)
-            self.draw_text_center("Local Player vs Player chess.", WINDOW_WIDTH // 2, 120, WHITE)
-            self.draw_text_center("Click a piece, then click a destination square.", WINDOW_WIDTH // 2, 150, WHITE)
-            self.draw_text_center("White moves first, then Black.", WINDOW_WIDTH // 2, 180, WHITE)
+            self.draw_text_center("Choose AI Difficulty", WINDOW_WIDTH // 2, 80, WHITE, 32)
 
-            back_rect = self.draw_button("Back", WINDOW_WIDTH // 2, 400)
+            easy_rect = self.draw_button("Easy", WINDOW_WIDTH // 2, 200)
+            med_rect = self.draw_button("Medium", WINDOW_WIDTH // 2, 260)
+            hard_rect = self.draw_button("Hard", WINDOW_WIDTH // 2, 320)
+            back_rect = self.draw_button("Back", WINDOW_WIDTH // 2, 380)
+
             pygame.display.flip()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
-                    showing = False
+                    choosing = False
+
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if back_rect.collidepoint(event.pos):
-                        showing = False
+                    if easy_rect.collidepoint(event.pos):
+                        self.ai_difficulty = "easy"
+                        choosing = False
+
+                    elif med_rect.collidepoint(event.pos):
+                        self.ai_difficulty = "medium"
+                        choosing = False
+
+                    elif hard_rect.collidepoint(event.pos):
+                        self.ai_difficulty = "hard"
+                        choosing = False
+
+                    elif back_rect.collidepoint(event.pos):
+                        return
+
+            self.clock.tick(30)
+
+    def choose_player_color(self):
+        choosing = True
+        while choosing and self.running:
+            self.screen.fill((50, 50, 80))
+            self.draw_text_center("Choose Your Color", WINDOW_WIDTH // 2, 80, WHITE, 32)
+
+            white_rect = self.draw_button("Play as White", WINDOW_WIDTH // 2, 200)
+            black_rect = self.draw_button("Play as Black", WINDOW_WIDTH // 2, 260)
+            random_rect = self.draw_button("Random", WINDOW_WIDTH // 2, 320)
+            back_rect = self.draw_button("Back", WINDOW_WIDTH // 2, 380)
+
+            pygame.display.flip()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.running = False
+                    choosing = False
+
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if white_rect.collidepoint(event.pos):
+                        self.player_color = Color.WHITE
+                        choosing = False
+
+                    elif black_rect.collidepoint(event.pos):
+                        self.player_color = Color.BLACK
+                        choosing = False
+
+                    elif random_rect.collidepoint(event.pos):
+                        import random
+                        self.player_color = random.choice([Color.WHITE, Color.BLACK])
+                        choosing = False
+
+                    elif back_rect.collidepoint(event.pos):
+                        return
 
             self.clock.tick(30)
 
@@ -87,8 +153,14 @@ class UI:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+
             elif event.type == pygame.MOUSEBUTTONDOWN and self.game_over_message is None:
-                self.handle_click(event.pos)
+                if self.mode == "pvp" or self.game.board.to_move == self.player_color:
+                    self.handle_click(event.pos)
+
+        if self.mode == "ai" and self.game_over_message is None:
+            if self.game.board.to_move != self.player_color:
+                self.handle_ai_move()
 
         self.draw_board()
         if self.game_over_message:
@@ -107,21 +179,23 @@ class UI:
         else:
             sr, sc = self.selected_square
             legal_moves = self.game.generate_legal_moves(self.game.board.to_move)
+
             chosen_move = None
             for m in legal_moves:
                 if m.start_row == sr and m.start_col == sc and m.end_row == row and m.end_col == col:
                     chosen_move = m
                     break
+
             if chosen_move:
                 piece = self.game.board.get_piece(sr, sc)
 
                 is_pawn_promo = (
-                        piece is not None and
-                        piece.piece_type == PieceType.PAWN and
-                        (
-                                (piece.color == Color.WHITE and row == 0) or
-                                (piece.color == Color.BLACK and row == 7)
-                        )
+                    piece is not None and
+                    piece.piece_type == PieceType.PAWN and
+                    (
+                        (piece.color == Color.WHITE and row == 0) or
+                        (piece.color == Color.BLACK and row == 7)
+                    )
                 )
 
                 if is_pawn_promo:
@@ -132,6 +206,33 @@ class UI:
                 self.check_endgame()
 
             self.selected_square = None
+
+    def handle_ai_move(self):
+        ai_color = Color.BLACK if self.player_color == Color.WHITE else Color.WHITE
+
+        if self.ai_difficulty == "easy":
+            move = self.game.ai_easy(ai_color)
+        elif self.ai_difficulty == "medium":
+            move = self.game.ai_medium(ai_color)
+        else:
+            move = self.game.ai_hard(ai_color)
+
+        if move:
+            piece = self.game.board.get_piece(move.start_row, move.start_col)
+
+            if (
+                piece is not None and
+                piece.piece_type == PieceType.PAWN and
+                (
+                    (piece.color == Color.WHITE and move.end_row == 0) or
+                    (piece.color == Color.BLACK and move.end_row == 7)
+                )
+            ):
+                move.promotion_piece_type = PieceType.QUEEN
+
+            self.game.board.make_move(move)
+
+        self.check_endgame()
 
     def choose_promotion(self, move):
         choosing = True
@@ -159,12 +260,13 @@ class UI:
                 if event.type == pygame.QUIT:
                     self.running = False
                     choosing = False
+
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     for rect, ptype in buttons:
                         if rect.collidepoint(event.pos):
                             move.promotion_piece_type = ptype
                             self.game.board.make_move(move)
-                            choosing = False
+                            var = False
                             return
 
             self.clock.tick(30)
@@ -175,7 +277,7 @@ class UI:
             winner = "Black" if color_to_move == Color.WHITE else "White"
             self.game_over_message = f"Checkmate! {winner} wins."
         elif self.game.is_stalemate(color_to_move):
-            self.game_over_message = "Stalemate! Draw."
+            self.game_over_message = "Stalemate Draw."
 
     def draw_board(self):
         for row in range(BOARD_SIZE):
@@ -220,7 +322,10 @@ class UI:
         overlay.set_alpha(180)
         overlay.fill((0, 0, 0))
         self.screen.blit(overlay, (0, 0))
-        self.draw_text_center(self.game_over_message, WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 - 20, WHITE, 32)
+
+        self.draw_text_center(self.game_over_message,
+                              WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 - 20, WHITE, 32)
+
         replay_rect = self.draw_button("Replay", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 40)
         quit_rect = self.draw_button("Quit to Main Menu", WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 100)
 
@@ -232,11 +337,13 @@ class UI:
                 if event.type == pygame.QUIT:
                     self.running = False
                     waiting = False
+
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if replay_rect.collidepoint(event.pos):
                         self.game = Game()
                         self.game_over_message = None
                         waiting = False
+
                     elif quit_rect.collidepoint(event.pos):
                         self.game = Game()
                         self.game_over_message = None
