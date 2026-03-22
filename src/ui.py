@@ -10,7 +10,7 @@ SQUARE_SIZE = WINDOW_WIDTH // BOARD_SIZE
 BOARD_LIGHT = (240, 217, 181)
 BOARD_DARK = (181, 136, 99)
 
-PURPLE = (180, 130, 255)
+Brown = (240, 217, 181)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
@@ -41,7 +41,7 @@ class UI:
     def show_main_menu(self):
         in_menu = True
         while in_menu and self.running:
-            self.screen.fill((50, 50, 80))
+            self.screen.fill((181, 136, 99))
             self.draw_text_center("Chess", WINDOW_WIDTH // 2, 80, WHITE, 36)
 
             pvp_rect = self.draw_button("Player vs Player", WINDOW_WIDTH // 2, 200)
@@ -79,7 +79,7 @@ class UI:
     def choose_ai_difficulty(self):
         choosing = True
         while choosing and self.running:
-            self.screen.fill((50, 50, 80))
+            self.screen.fill((181, 136, 99))
             self.draw_text_center("Choose AI Difficulty", WINDOW_WIDTH // 2, 80, WHITE, 32)
 
             easy_rect = self.draw_button("Easy", WINDOW_WIDTH // 2, 200)
@@ -115,7 +115,7 @@ class UI:
     def choose_player_color(self):
         choosing = True
         while choosing and self.running:
-            self.screen.fill((50, 50, 80))
+            self.screen.fill((181, 136, 99))
             self.draw_text_center("Choose Your Color", WINDOW_WIDTH // 2, 80, WHITE, 32)
 
             white_rect = self.draw_button("Play as White", WINDOW_WIDTH // 2, 200)
@@ -244,7 +244,7 @@ class UI:
         ]
 
         while choosing and self.running:
-            self.screen.fill((50, 50, 80))
+            self.screen.fill((181, 136, 99))
             self.draw_text_center("Choose Promotion", WINDOW_WIDTH // 2, 80, WHITE, 32)
 
             buttons = []
@@ -312,7 +312,7 @@ class UI:
         width, height = 220, 40
         rect = pygame.Rect(0, 0, width, height)
         rect.center = (x, y)
-        pygame.draw.rect(self.screen, PURPLE, rect)
+        pygame.draw.rect(self.screen, Brown, rect)
         pygame.draw.rect(self.screen, BLACK, rect, 2)
         self.draw_text_center(text, x, y, BLACK)
         return rect
