@@ -59,10 +59,10 @@ class Game:
                     # all pieces except dragger piece
                     if piece is not self.dragger.piece:
                         piece.set_texture(size=80)
-                        #img = pygame.image.load(piece.texture)
+                        img = pygame.image.load(piece.texture)
                         img_center = col * SQSIZE + SQSIZE // 2, row * SQSIZE + SQSIZE // 2
-                        #piece.texture_rect = img.get_rect(center=img_center)
-                        #surface.blit(img, piece.texture_rect)
+                        piece.texture_rect = img.get_rect(center=img_center)
+                        surface.blit(img, piece.texture_rect)
 
     def show_moves(self, surface):
         theme = self.config.theme
