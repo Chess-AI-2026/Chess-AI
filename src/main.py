@@ -1,5 +1,6 @@
 import pygame
 import sys
+import random
 
 from const import *
 from game import Game
@@ -13,11 +14,12 @@ class Main:
         self.screen = pygame.display.set_mode( (WIDTH, HEIGHT) )
         pygame.display.set_caption('Chess')
         self.game = Game()
-        self.game_over_msg = None # Tracks if the game has ended
+        # tracks if the game has ended
+        self.game_over_msg = None 
         self.font = pygame.font.SysFont('monospace', 48, bold=True)
 
-        self.state = 'MENU'      # Options: 'MENU', 'PLAYING', 'PAUSED'
-        self.game_mode = 'local' # Options: 'local', 'easy', 'medium', 'hard'
+        self.state = 'MENU'      # 'MENU', 'PLAYING', 'PAUSED'
+        self.game_mode = 'local' # 'local', 'easy', 'medium', 'hard'
 
     def draw_button(self, text, x, y, width, height):
         mouse_pos = pygame.mouse.get_pos()
@@ -142,8 +144,11 @@ class Main:
                         # if clicked square has a piece ?
                         if board.squares[clicked_row][clicked_col].has_piece():
                             piece = board.squares[clicked_row][clicked_col].piece
+
                             # valid piece (color) ?
                             if piece.color == game.next_player:
+                                if self.game_mode != 'local' and piece.color == 'black':
+                                    continue
                                 board.calc_moves(piece, clicked_row, clicked_col, bool=True)
                                 dragger.save_initial(event.pos)
                                 dragger.drag_piece(piece)
@@ -239,9 +244,33 @@ class Main:
                     lbl = self.font.render(self.game_over_msg, 1, (255, 255, 255))
                     lbl_pos = (WIDTH // 2 - lbl.get_width() // 2, HEIGHT // 2 - lbl.get_height() // 2)
                     screen.blit(lbl, lbl_pos)
-            
-            pygame.display.update()
+                
+                pygame.display.update() 
 
+                if self.game_mode != 'local' and game.next_player == 'black' and not self.game_over_msg:
+                    from ai import AI
+                    ai = AI(self.game_mode)
+                
+                    if self.game_mode == 'easy':
+                        moves = ai.get_all_moves(board, 'black')
+                        best_move = random.choice(moves) if moves else None
+                    else:
+                        eval, best_move = ai.minimax(board, ai.depth, float('-inf'), float('inf'), False)
+                
+                    if best_move:
+                        initial_sq = best_move.initial
+                        piece = board.squares[initial_sq.row][initial_sq.col].piece
+                    
+                        captured = board.squares[best_move.final.row][best_move.final.col].has_piece()
+                        board.move(piece, best_move)
+                        board.set_true_en_passant(piece)
+                    
+                        game.play_sound(captured)
+                        game.next_turn()
+                        self.game_over_msg = game.check_game_over()
+
+            pygame.display.update()
+        
 
 main = Main()
 main.mainloop()

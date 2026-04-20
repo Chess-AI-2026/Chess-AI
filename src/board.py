@@ -80,24 +80,49 @@ class Board:
         piece.en_passant = True
 
     def in_check(self, piece, move):
-        temp_piece = copy.deepcopy(piece)
-        temp_board = copy.deepcopy(self)
-        temp_board.move(temp_piece, move, testing=True)
+        initial_row = move.initial.row
+        initial_col = move.initial.col
+        final_row = move.final.row
+        final_col = move.final.col
         
+        captured_piece = self.squares[final_row][final_col].piece
+        en_passant_piece = None
+        en_passant_col = None
+
+        if isinstance(piece, Pawn) and abs(initial_col - final_col) == 1 and captured_piece is None:
+            en_passant_col = initial_col + (final_col - initial_col)
+            en_passant_piece = self.squares[initial_row][en_passant_col].piece
+            self.squares[initial_row][en_passant_col].piece = None
+
+        self.squares[initial_row][initial_col].piece = None
+        self.squares[final_row][final_col].piece = piece
+
+        # checks if the King is exposed
+        in_check = False
         for row in range(ROWS):
             for col in range(COLS):
-                if temp_board.squares[row][col].has_enemy_piece(piece.color):
-                    p = temp_board.squares[row][col].piece
+                if self.squares[row][col].has_enemy_piece(piece.color):
+                    p = self.squares[row][col].piece
                     p.clear_moves()
-                    temp_board.calc_moves(p, row, col, bool=False)
+                    
+                    self.calc_moves(p, row, col, bool=False)
+                    
                     for m in p.moves:
                         if isinstance(m.final.piece, King):
-                            return True
-        
-        return False
+                            in_check = True
+                            break
+                if in_check: break
+            if in_check: break
+
+        self.squares[initial_row][initial_col].piece = piece
+        self.squares[final_row][final_col].piece = captured_piece
+        if en_passant_piece:
+            self.squares[initial_row][en_passant_col].piece = en_passant_piece
+
+        return in_check
 
     def is_in_check(self, color):
-        # Checks if the given color is currently in check
+        # checks for check
         for row in range(ROWS):
             for col in range(COLS):
                 if self.squares[row][col].has_enemy_piece(color):
@@ -110,9 +135,7 @@ class Board:
         return False
 
     def calc_moves(self, piece, row, col, bool=True):
-        '''
-            Calculate all the possible (valid) moves of an specific piece on a specific position
-        '''
+        # calculates all valid moves of specific pieces
         piece.clear_moves()
         
         def pawn_moves():
@@ -210,7 +233,6 @@ class Board:
                             else:
                                 # append new move
                                 piece.add_move(move)
-
 
         def knight_moves():
             # 8 possible moves
