@@ -13,6 +13,8 @@ class Main:
         self.screen = pygame.display.set_mode( (WIDTH, HEIGHT) )
         pygame.display.set_caption('Chess')
         self.game = Game()
+        self.game_over_msg = None # Tracks if the game has ended
+        self.font = pygame.font.SysFont('monospace', 48, bold=True) # Big font for overlay
 
     def mainloop(self):
         
@@ -36,6 +38,9 @@ class Main:
 
                 # click
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.game_over_msg:
+                        continue # Disable board clicks if the game is over
+                    
                     dragger.update_mouse(event.pos)
 
                     clicked_row = dragger.mouseY // SQSIZE
@@ -102,6 +107,12 @@ class Main:
                             game.show_pieces(screen)
                             # next turn
                             game.next_turn()
+
+                            # check for checkmate or stalemate
+                            self.game_over_msg = game.check_game_over()
+                            '''#result = game.check_game_over()
+                            if result:
+                                print(result)'''
                     
                     dragger.undrag_piece()
                 
@@ -118,11 +129,22 @@ class Main:
                         game = self.game
                         board = self.game.board
                         dragger = self.game.dragger
+                        self.game_over_msg = None
 
                 # quit application
                 elif event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+
+            if self.game_over_msg:
+                overlay = pygame.Surface((WIDTH, HEIGHT))
+                overlay.set_alpha(150)
+                overlay.fill((0, 0, 0))
+                screen.blit(overlay, (0, 0))
+
+                lbl = self.font.render(self.game_over_msg, 1, (255, 255, 255))
+                lbl_pos = (WIDTH // 2 - lbl.get_width() // 2, HEIGHT // 2 - lbl.get_height() // 2)
+                screen.blit(lbl, lbl_pos)
             
             pygame.display.update()
 

@@ -88,6 +88,7 @@ class Board:
             for col in range(COLS):
                 if temp_board.squares[row][col].has_enemy_piece(piece.color):
                     p = temp_board.squares[row][col].piece
+                    p.clear_moves()
                     temp_board.calc_moves(p, row, col, bool=False)
                     for m in p.moves:
                         if isinstance(m.final.piece, King):
@@ -95,10 +96,24 @@ class Board:
         
         return False
 
+    def is_in_check(self, color):
+        # Checks if the given color is currently in check
+        for row in range(ROWS):
+            for col in range(COLS):
+                if self.squares[row][col].has_enemy_piece(color):
+                    p = self.squares[row][col].piece
+                    p.clear_moves()
+                    self.calc_moves(p, row, col, bool=False)
+                    for m in p.moves:
+                        if isinstance(m.final.piece, King):
+                            return True
+        return False
+
     def calc_moves(self, piece, row, col, bool=True):
         '''
             Calculate all the possible (valid) moves of an specific piece on a specific position
         '''
+        piece.clear_moves()
         
         def pawn_moves():
             # steps
@@ -227,7 +242,6 @@ class Board:
                             if not self.in_check(piece, move):
                                 # append new move
                                 piece.add_move(move)
-                            else: break
                         else:
                             # append new move
                             piece.add_move(move)
@@ -309,7 +323,6 @@ class Board:
                             if not self.in_check(piece, move):
                                 # append new move
                                 piece.add_move(move)
-                            else: break
                         else:
                             # append new move
                             piece.add_move(move)

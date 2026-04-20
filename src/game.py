@@ -108,6 +108,25 @@ class Game:
     def next_turn(self):
         self.next_player = 'white' if self.next_player == 'black' else 'black'
 
+    def check_game_over(self):
+        total_moves = 0
+        for row in range(ROWS):
+            for col in range(COLS):
+                if self.board.squares[row][col].has_team_piece(self.next_player):
+                    piece = self.board.squares[row][col].piece
+                    piece.clear_moves()
+                    self.board.calc_moves(piece, row, col, bool=True)
+                    total_moves += len(piece.moves)
+                    
+        if total_moves == 0:
+            if self.board.is_in_check(self.next_player):
+                winner = 'White' if self.next_player == 'black' else 'Black'
+                return f"Checkmate! {winner} Wins!"
+            else:
+                return "Stalemate! It's a Draw!"
+                
+        return None
+
     def set_hover(self, row, col):
         self.hovered_sqr = self.board.squares[row][col]
 
