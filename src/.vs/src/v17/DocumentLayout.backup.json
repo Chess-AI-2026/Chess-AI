@@ -66,8 +66,7 @@
               "RelativeToolTip": "ui.py",
               "ViewState": "AgIAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-04-20T06:32:00.015Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-20T06:32:00.015Z"
             },
             {
               "$type": "Document",
@@ -79,8 +78,7 @@
               "RelativeToolTip": "square.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-04-20T06:31:58.456Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-20T06:31:58.456Z"
             },
             {
               "$type": "Document",
@@ -92,8 +90,7 @@
               "RelativeToolTip": "piece.py",
               "ViewState": "AgIAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-04-20T06:31:56.882Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-20T06:31:56.882Z"
             },
             {
               "$type": "Document",
@@ -105,8 +102,7 @@
               "RelativeToolTip": "move.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-04-20T06:31:53.616Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-20T06:31:53.616Z"
             },
             {
               "$type": "Document",
@@ -118,8 +114,7 @@
               "RelativeToolTip": "dragger.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-04-20T06:31:46.221Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-20T06:31:46.221Z"
             },
             {
               "$type": "Document",
@@ -131,8 +126,7 @@
               "RelativeToolTip": "const.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-04-20T06:31:44.297Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-20T06:31:44.297Z"
             },
             {
               "$type": "Document",
@@ -144,8 +138,7 @@
               "RelativeToolTip": "config.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-04-20T06:31:41.947Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-20T06:31:41.947Z"
             },
             {
               "$type": "Document",
@@ -153,9 +146,9 @@
               "Title": "main.py",
               "DocumentMoniker": "C:\\Repositories\\Chess-AI\\src\\main.py",
               "RelativeDocumentMoniker": "main.py",
-              "ToolTip": "C:\\Repositories\\Chess-AI\\src\\main.py",
-              "RelativeToolTip": "main.py",
-              "ViewState": "AgIAAHAAAAAAAAAAAAAQwJIAAAApAAAAAAAAAA==",
+              "ToolTip": "C:\\Repositories\\Chess-AI\\src\\main.py*",
+              "RelativeToolTip": "main.py*",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAQwE0AAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2026-04-11T23:37:07.344Z",
               "EditorCaption": ""
@@ -170,8 +163,7 @@
               "RelativeToolTip": "board.py",
               "ViewState": "AgIAAGUAAAAAAAAAAAAowHUAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-04-11T23:26:26.527Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-11T23:26:26.527Z"
             },
             {
               "$type": "Document",
@@ -183,8 +175,7 @@
               "RelativeToolTip": "game.py",
               "ViewState": "AgIAAA4AAAAAAAAAAAAAwH8AAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-03-22T04:04:20.706Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-22T04:04:20.706Z"
             }
           ]
         }
