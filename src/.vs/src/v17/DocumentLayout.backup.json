@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Repositories\\Chess-AI\\src\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|C:\\Repositories\\Chess-AI\\src\\board.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|solutionrelative:board.py||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|C:\\Repositories\\Chess-AI\\src\\main.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|solutionrelative:main.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|C:\\Repositories\\Chess-AI\\src\\game.py||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|solutionrelative:game.py||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|C:\\Repositories\\Chess-AI\\src\\board.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|solutionrelative:board.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|C:\\Repositories\\Chess-AI\\src\\ai.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|solutionrelative:ai.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|C:\\Repositories\\Chess-AI\\src\\dragger.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|solutionrelative:dragger.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|C:\\Repositories\\Chess-AI\\src\\square.py||{8B382828-6202-11D1-8870-0000F87579D2}",
@@ -27,20 +35,12 @@
       "RelativeMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|solutionrelative:move.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|C:\\Repositories\\Chess-AI\\src\\game.py||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|solutionrelative:game.py||{8B382828-6202-11D1-8870-0000F87579D2}|"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|C:\\Repositories\\Chess-AI\\src\\config.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|solutionrelative:config.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|C:\\Repositories\\Chess-AI\\src\\const.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|solutionrelative:const.py||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|C:\\Repositories\\Chess-AI\\src\\dragger.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{31FE39E8-FCEC-45C5-9C74-4155E92C3168}|src.pyproj|solutionrelative:dragger.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,20 +58,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ai.py",
               "DocumentMoniker": "C:\\Repositories\\Chess-AI\\src\\ai.py",
               "RelativeDocumentMoniker": "ai.py",
               "ToolTip": "C:\\Repositories\\Chess-AI\\src\\ai.py",
               "RelativeToolTip": "ai.py",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAAAGgAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAADYAAAAAAAAAAAAwwE4AAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2026-04-20T18:14:38.403Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "square.py",
               "DocumentMoniker": "C:\\Repositories\\Chess-AI\\src\\square.py",
               "RelativeDocumentMoniker": "square.py",
@@ -79,12 +79,11 @@
               "RelativeToolTip": "square.py",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-04-20T06:31:58.456Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-20T06:31:58.456Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "piece.py",
               "DocumentMoniker": "C:\\Repositories\\Chess-AI\\src\\piece.py",
               "RelativeDocumentMoniker": "piece.py",
@@ -92,12 +91,11 @@
               "RelativeToolTip": "piece.py",
               "ViewState": "AgIAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-04-20T06:31:56.882Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-20T06:31:56.882Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "move.py",
               "DocumentMoniker": "C:\\Repositories\\Chess-AI\\src\\move.py",
               "RelativeDocumentMoniker": "move.py",
@@ -105,25 +103,24 @@
               "RelativeToolTip": "move.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-04-20T06:31:53.616Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-20T06:31:53.616Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 4,
               "Title": "dragger.py",
               "DocumentMoniker": "C:\\Repositories\\Chess-AI\\src\\dragger.py",
               "RelativeDocumentMoniker": "dragger.py",
               "ToolTip": "C:\\Repositories\\Chess-AI\\src\\dragger.py",
               "RelativeToolTip": "dragger.py",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABMAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2026-04-20T06:31:46.221Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "const.py",
               "DocumentMoniker": "C:\\Repositories\\Chess-AI\\src\\const.py",
               "RelativeDocumentMoniker": "const.py",
@@ -131,12 +128,11 @@
               "RelativeToolTip": "const.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-04-20T06:31:44.297Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-20T06:31:44.297Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "config.py",
               "DocumentMoniker": "C:\\Repositories\\Chess-AI\\src\\config.py",
               "RelativeDocumentMoniker": "config.py",
@@ -144,44 +140,43 @@
               "RelativeToolTip": "config.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2026-04-20T06:31:41.947Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-20T06:31:41.947Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "main.py",
               "DocumentMoniker": "C:\\Repositories\\Chess-AI\\src\\main.py",
               "RelativeDocumentMoniker": "main.py",
               "ToolTip": "C:\\Repositories\\Chess-AI\\src\\main.py",
               "RelativeToolTip": "main.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEBAABpAAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAowCMAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2026-04-11T23:37:07.344Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "board.py",
               "DocumentMoniker": "C:\\Repositories\\Chess-AI\\src\\board.py",
               "RelativeDocumentMoniker": "board.py",
-              "ToolTip": "C:\\Repositories\\Chess-AI\\src\\board.py*",
-              "RelativeToolTip": "board.py*",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAQwIkAAAA3AAAAAAAAAA==",
+              "ToolTip": "C:\\Repositories\\Chess-AI\\src\\board.py",
+              "RelativeToolTip": "board.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2026-04-11T23:26:26.527Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "game.py",
               "DocumentMoniker": "C:\\Repositories\\Chess-AI\\src\\game.py",
               "RelativeDocumentMoniker": "game.py",
               "ToolTip": "C:\\Repositories\\Chess-AI\\src\\game.py",
               "RelativeToolTip": "game.py",
-              "ViewState": "AgIAAG8AAAAAAAAAAAAgwIkAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIIAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2026-03-22T04:04:20.706Z",
               "EditorCaption": ""

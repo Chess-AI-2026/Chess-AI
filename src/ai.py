@@ -50,7 +50,7 @@ class AI:
         return sorted(moves, key=score_move, reverse=True)
 
     def minimax(self, board, depth, alpha, beta, maximizing_player):
-        # The core AI brain: Simulates future moves to find the best outcome
+        # minimax AI brain: Simulates future moves to find the best outcome
         if depth == 0:
             return self.eval(board), None
         
@@ -76,7 +76,7 @@ class AI:
                     max_eval = evaluation
                     best_move = move
                     
-                # Alpha-Beta Pruning shortcut
+                # Alpha-Beta Pruning
                 alpha = max(alpha, evaluation)
                 if beta <= alpha:
                     break
