@@ -12,7 +12,15 @@ Quit: Closes the program
 Requirements:
 Python 3.13
 Must have pygame installed
-Must run main.py (located in the src folder)
+## ⚠️ Important
+
+> **You MUST run the project from the root directory using:**
+>
+> ```bash
+> python3 src/main.py
+> ```
+>
+> Running the file from inside the `src` folder will cause errors.
 
 Controls:
 Click and drag pieces to move
